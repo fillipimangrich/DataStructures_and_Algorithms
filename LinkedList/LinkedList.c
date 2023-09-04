@@ -26,8 +26,28 @@ void push(LinkedList* list, Node* node){
 }
 
 
-void pop(LinkedList* list){
+Node pop(LinkedList* list){
+  if (list->size == 0){
+    printf("Empty list, nothing to return");
+    //return NULL;
+  }
 
+  Node current = *list->head;
+  Node previous;
+  if (current.next == NULL){
+    list->head = NULL;
+    list->size -= 1;
+    return current;
+  }
+
+  while(current.next != NULL){
+    previous = current;
+    current = *current.next;
+  }
+  previous.next = NULL;
+  list->tail = &previous;
+  list->size -= 1;
+  return current;
 }
 
 void remove_by_element(LinkedList* list, Node node){
@@ -44,8 +64,13 @@ int main(){
   Node first_node = {.next = NULL, .content = 25};
 
   push(&list, &first_node);
+
  
   printf("Value: %d \n", list.head->content);
+  printf("Size: %d \n", list.size);
+
+  Node node = pop(&list);
+  printf("Value: %d \n", node.content);
   printf("Size: %d \n", list.size);
   return 0;
 }
