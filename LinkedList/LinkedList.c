@@ -1,5 +1,5 @@
 #include <stdio.h>
-
+#include <stdlib.h>
 
 typedef struct{
   struct Node * head;
@@ -15,14 +15,16 @@ typedef struct Node{
 
 
 void push(LinkedList* list, int value){
-  Node node = {.next = NULL, .content = value};
+  Node * node = malloc(sizeof(Node));
+  node->next = NULL;
+  node->content = value;
   if(list->head==NULL){
-    list->head = &node;  
-    list->tail = &node;
+    list->head = node;  
+    list->tail = node;
     
   }else{
-    list->tail->next = &node;
-    list->tail = &node;
+    list->tail->next = node;
+    list->tail = node;
   }
   list->size += 1;
 }
@@ -34,30 +36,44 @@ int pop(LinkedList* list){
     return -1;
   }
 
-  Node current = *list->head;
-  Node previous;
+  Node * current = list->head;
+  Node * previous = NULL;
 
-  if (current.next == NULL){
+  if (current->next == NULL){
     list->head = NULL;
-    list->size -= 1;
-    return current.content;
+    int value = current->content;
+    free(current);
+    return value;
   }
 
-  while(current.next != NULL){
-    printf("aqui\n");
-    printf("%d\n",current.content);
+  while(current->next != NULL){ 
     previous = current;
-    current = *current.next;
+    current = current->next;
   }
 
-  previous.next = NULL;
-  list->tail = &previous;
+  previous->next = NULL;
+  list->tail = previous;
   list->size -= 1;
-  return current.content;
+  int value = current->content;
+  free(current); 
+  return value;
 }
 
-void insert(LinkedList* list, int position){
-
+void insert(LinkedList* list, int position, int value){
+  Node * current = list->head;
+  Node * previous = NULL;
+  for(int i = 0; i <= list->size; i++){
+    if(i == position){
+      Node * node = malloc(sizeof(Node));
+      node->next = current;
+      node->content = value;
+      previous->next = node;
+      list->size += 1;
+      break;
+    }
+    previous = current;
+    current = current->next;
+  }
 }
 
 void remove_by_element(LinkedList* list, Node node){
@@ -72,10 +88,10 @@ void print_list(LinkedList * list){
   if (list->head == NULL){
     printf("Empty list \n");
   }else{
-    Node current = *list->head;
-    while(current.next != NULL){
-      printf("Value: %d\n", current.content);
-      current = *current.next;
+    Node * current = list->head;
+    while(current != NULL){
+      printf("Value: %d\n", current->content);
+      current = current->next;
     }
   }
 }
@@ -89,7 +105,9 @@ int main(){
   push(&list, 10);
   push(&list, 11);
   push(&list, 12);
+  insert(&list, 1, 50);
 
+  print_list(&list);
 
   printf("Value: %d \n", list.head->content);
   printf("Size: %d \n", list.size);
