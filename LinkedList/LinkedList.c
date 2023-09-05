@@ -62,6 +62,16 @@ int pop(LinkedList* list){
 void insert(LinkedList* list, int position, int value){
   Node * current = list->head;
   Node * previous = NULL;
+
+  if (position == 0){
+    Node * node = malloc(sizeof(Node));
+    node->next = current;
+    node->content = value;
+    list->head = node;
+    list->size += 1;
+    return;
+  }
+ 
   for(int i = 0; i <= list->size; i++){
     if(i == position){
       Node * node = malloc(sizeof(Node));
@@ -128,6 +138,7 @@ int main(){
   push(&list, 11);
   push(&list, 12);
   insert(&list, 2, 50);
+  insert(&list, 0, 23);
 
   print_list(&list);
 
