@@ -76,12 +76,34 @@ void insert(LinkedList* list, int position, int value){
   }
 }
 
-void remove_by_element(LinkedList* list, Node node){
-
+void remove_by_element(LinkedList* list, int value){
+  Node * current = list->head;
+  Node * previous = NULL;
+  for(int i = 0; i <= list->size; i++){
+    if(current->content == value){
+      previous->next = current->next;
+      free(current);
+      list->size -= 1;
+      break;
+    }
+    previous = current;
+    current = current->next;
+  }
 }
 
 void remove_by_position(LinkedList * list, int position){
-
+  Node * current = list->head;
+  Node * previous = NULL;
+  for(int i = 0; i <= list->size; i++){
+    if(i == position){
+      previous->next = current->next;
+      free(current);
+      list->size -= 1;
+      break;
+    }
+    previous = current;
+    current = current->next;
+  }
 }
 
 void print_list(LinkedList * list){
@@ -105,7 +127,7 @@ int main(){
   push(&list, 10);
   push(&list, 11);
   push(&list, 12);
-  insert(&list, 1, 50);
+  insert(&list, 2, 50);
 
   print_list(&list);
 
@@ -116,6 +138,10 @@ int main(){
 
   printf("Value: %d \n", node);
   printf("Size: %d \n", list.size);
+  
+  remove_by_element(&list, 10);
+
+  remove_by_position(&list, 2);
 
   print_list(&list);
   return 0;
