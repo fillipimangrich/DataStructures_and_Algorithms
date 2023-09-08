@@ -21,7 +21,6 @@ void push(LinkedList* list, int value){
   if(list->head==NULL){
     list->head = node;  
     list->tail = node;
-    
   }else{
     list->tail->next = node;
     list->tail = node;
@@ -68,7 +67,7 @@ void insert(LinkedList* list, int position, int value){
     node->next = current;
     node->content = value;
     list->head = node;
-    list->size += 1;
+    list->size += 1; 
     return;
   }
  
@@ -79,7 +78,7 @@ void insert(LinkedList* list, int position, int value){
       node->content = value;
       previous->next = node;
       list->size += 1;
-      break;
+      return;
     }
     previous = current;
     current = current->next;
@@ -94,7 +93,7 @@ void remove_by_element(LinkedList* list, int value){
       previous->next = current->next;
       free(current);
       list->size -= 1;
-      break;
+      return;
     }
     previous = current;
     current = current->next;
@@ -109,7 +108,7 @@ void remove_by_position(LinkedList * list, int position){
       previous->next = current->next;
       free(current);
       list->size -= 1;
-      break;
+      return;
     }
     previous = current;
     current = current->next;
