@@ -23,10 +23,12 @@ void push(LinkedList* list, int value){
   if(list->head==NULL){
     list->head = node;  
     list->tail = node;
+    node->next = node;
   }else{
     list->tail->next = node;
     node->previous = list->tail;
     list->tail = node;
+    node->next = list->head;
   }
   list->size += 1;
 }
@@ -50,7 +52,7 @@ int pop(LinkedList* list){
     int value = list->tail->content;
     free(list->tail);
     list->tail = list->head;
-    list->head->next = NULL;
+    list->head->next = list->tail;
     list->size -= 1;
     return value;
   }
@@ -59,7 +61,7 @@ int pop(LinkedList* list){
   Node * node = list->tail;
   int value = node->content;
   list->tail = node->previous;
-  node->previous->next = NULL;
+  node->previous->next = list->head;
   list->tail = node->previous;
   free(node);
   list->size -= 1;
@@ -81,6 +83,7 @@ void insert(LinkedList* list, int position, int value){
 
     list->head->previous = node;
     list->head = node;
+    list->tail->next = node;
     list->size += 1; 
     return;
   }
@@ -93,6 +96,7 @@ void insert(LinkedList* list, int position, int value){
 
     list->tail->next = node;
     list->tail= node;
+    node->next = list->head;
     list->size += 1; 
     return;
   }
