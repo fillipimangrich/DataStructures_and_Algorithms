@@ -1,21 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "CircularLinkedList.h"
 
-typedef struct{
-  struct Node * head;
-  struct Node * tail;
-  int size;
-}LinkedList;
-
-
-typedef struct Node{
-  struct Node * next;
-  struct Node * previous;
-  int content;
-}Node;
-
-
-void push(LinkedList* list, int value){
+void push(CircularLinkedList* list, int value){
   Node * node = malloc(sizeof(Node));
   node->next = NULL;
   node->previous = NULL;
@@ -34,7 +21,7 @@ void push(LinkedList* list, int value){
 }
 
 
-int pop(LinkedList* list){
+int pop(CircularLinkedList* list){
   if (list->size == 0){
     printf("Empty list, nothing to return");
     return -1;
@@ -68,7 +55,7 @@ int pop(LinkedList* list){
   return value;
 }
 
-void insert(LinkedList* list, int position, int value){
+void insert(CircularLinkedList* list, int position, int value){
 
   if(position > list->size-1){
     printf("Invalid position\n");
@@ -121,7 +108,7 @@ void insert(LinkedList* list, int position, int value){
   }
 }
 
-void remove_by_element(LinkedList* list, int value){
+void remove_by_element(CircularLinkedList* list, int value){
   printf("here\n");
   Node * current = list->head;
   for(int i = 0; i <= list->size; i++){
@@ -139,7 +126,7 @@ void remove_by_element(LinkedList* list, int value){
   }
 }
 
-void remove_by_position(LinkedList * list, int position){
+void remove_by_position(CircularLinkedList * list, int position){
   Node * current = list->head;
   for(int i = 0; i <= list->size; i++){
     if(i == position){
@@ -153,7 +140,7 @@ void remove_by_position(LinkedList * list, int position){
   }
 }
 
-void print_list(LinkedList * list){
+void print_list(CircularLinkedList * list){
   if (list->head == NULL){
     printf("Empty list \n");
   }else{
@@ -165,10 +152,11 @@ void print_list(LinkedList * list){
       printf("Value: %d\n", current->content);
       current = current->next;
     }
+    printf("Value: %d\n", current->content);
   }
 }
 
-void print_list_inverse(LinkedList * list){
+void print_list_inverse(CircularLinkedList * list){
   if (list->head == NULL){
     printf("Empty list \n");
   }else{
@@ -180,32 +168,33 @@ void print_list_inverse(LinkedList * list){
       printf("Value: %d\n", current->content);
       current = current->previous;
     }
+    printf("Value: %d\n", current->content);
   }
 }
 
-int main(){
-  LinkedList list = {.head = NULL, .tail = NULL, .size = 0};
+// int main(){
+//   CircularLinkedList list = {.head = NULL, .tail = NULL, .size = 0};
 
-  push(&list, 0);
-  push(&list, 1);
-  push(&list, 2);
-  push(&list, 3);
-  push(&list, 4);
-  push(&list, 5);
-  insert(&list, 2, 20);
-  insert(&list, 0, 10);
+//   push(&list, 0);
+//   push(&list, 1);
+//   push(&list, 2);
+//   push(&list, 3);
+//   push(&list, 4);
+//   push(&list, 5);
+//   insert(&list, 2, 20);
+//   insert(&list, 0, 10);
 
-  print_list(&list);
-  print_list_inverse(&list);
+//   print_list(&list);
+//   print_list_inverse(&list);
 
-  int node = pop(&list);
+//   int node = pop(&list);
 
-  print_list(&list);
+//   print_list(&list);
 
-  remove_by_position(&list, 2);
+//   remove_by_position(&list, 2);
 
-  print_list(&list);
-  return 0;
-}
+//   print_list(&list);
+//   return 0;
+// }
 
 
