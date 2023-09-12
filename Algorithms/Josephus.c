@@ -26,12 +26,16 @@ int main ( int argc, char *argv[] ){
     while (list.size > 1)
     {
         int to_dead_position = (sword_position+k)%list.size;
+        if (to_dead_position == sword_position){
+            to_dead_position = (to_dead_position+1)%list.size;
+        }
         remove_by_position(&list, to_dead_position);        
-        printf("removed: %d\n", to_dead_position);
         printf("--------------\n");
-        sword_position = (sword_position+k)%list.size;
+        printf("sword: %d\n", sword_position);
+        printf("removed: %d\n", to_dead_position);
+        sword_position = (sword_position+k+1)%list.size;
     }
-    
+    printf("--------------\n");
     printf("Suvivor: %d\n", list.head->content);
 
     return 0;

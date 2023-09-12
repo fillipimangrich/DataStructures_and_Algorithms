@@ -127,6 +127,31 @@ void remove_by_element(CircularLinkedList* list, int value){
 }
 
 void remove_by_position(CircularLinkedList * list, int position){
+  if(position > list->size-1){
+      printf("Invalid position\n");
+      return;
+    }
+
+  if (position == 0){
+    Node * node = list->head;
+    list->head = list->head->next;
+    free(node);
+    list->head->previous = list->tail;
+    list->tail->next = list->head;
+    list->size -= 1; 
+    return;
+  }
+
+  if (position == list->size-1){
+    Node * node = list->tail;
+    list->tail = list->tail->previous;
+    free(node);
+    list->head->previous = list->tail;
+    list->tail->next = list->head;
+    list->size -= 1; 
+    return;
+  }
+
   Node * current = list->head;
   for(int i = 0; i <= list->size; i++){
     if(i == position){
