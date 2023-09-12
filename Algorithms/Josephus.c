@@ -6,7 +6,7 @@
 int main ( int argc, char *argv[] ){
 
     if (argc > 3){
-        printf("to many arguments\n");
+        printf("too many arguments\n");
         return 0;
     }
 
@@ -22,6 +22,17 @@ int main ( int argc, char *argv[] ){
 
     print_list(&list);
 
+    int sword_position = 0;
+    while (list.size > 1)
+    {
+        int to_dead_position = (sword_position+k)%list.size;
+        remove_by_position(&list, to_dead_position);        
+        printf("removed: %d\n", to_dead_position);
+        printf("--------------\n");
+        sword_position = (sword_position+k)%list.size;
+    }
+    
+    printf("Suvivor: %d\n", list.head->content);
 
     return 0;
 }
